@@ -22,13 +22,13 @@ class LongServerTask
   public function setTaskName($taskName)
   {
     $this->taskName = $taskName;
+
+    // This task's filename will the task string itself (as a filename safe string).
+    $this->taskFilePath = $this->taskStatusStoragePath . $this->stringToSlug($this->taskName);
   }
 
   public function setTaskStarted()
   {
-    // This task's filename will the task string itself (as a filename safe string).
-    $this->taskFilePath = $this->taskStatusStoragePath . $this->stringToSlug($this->taskName);
-
     // Create our file for this task.
     // Content doesn't matter, but let's write a timestamp. Maybe we'll want it later for performance
     // monitoring, timeouts, etc.
@@ -38,6 +38,7 @@ class LongServerTask
   public function taskIsDone()
   {
     // If file exists, the related task still busy.
+    file_put_contents('debug', $this->taskFilePath);
     return ! file_exists($this->taskFilePath);
   }
 

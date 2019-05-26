@@ -13,15 +13,15 @@
   (() => {
 
     const apiBaseUrl = 'http://localhost.test/long-server-task/example/'
-
+    const exampleTaskName = 'Just some task that takes a long time'
     document.getElementById('start-task-button').addEventListener('click', () => {
       // Start the slow function.
-      window.fetch(apiBaseUrl + 'task.php?taskName=someslowfunction')
+      window.fetch(apiBaseUrl + 'task.php?taskName=' + exampleTaskName)
     })
 
     document.getElementById('check-task-button').addEventListener('click', () => {
       // Poll for status on the slow function.
-      window.fetch(apiBaseUrl + 'pollEndpoint.php?taskName=someslowfunction')
+      window.fetch(apiBaseUrl + 'pollEndpointExample.php?taskName=' + exampleTaskName)
         .then(response => response.json())
         .then(data => window.alert(JSON.stringify(data)))
     })

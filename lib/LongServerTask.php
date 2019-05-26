@@ -35,9 +35,7 @@ class LongServerTask
    */
   public function setTaskName($taskName)
   {
-    $this->taskName = $taskName;
-
-    // This task's filename will the task string itself (as a filename safe string).
+    $this->taskName = $taskName; // Keep the original task name for possible future needs.
     $this->taskFilePath = $this->taskStatusStoragePath . $this->stringToSlug($this->taskName);
   }
 

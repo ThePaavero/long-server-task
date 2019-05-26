@@ -32,7 +32,7 @@ class LongServerTask
     // Create our file for this task.
     // Content doesn't matter, but let's write a timestamp. Maybe we'll want it later for performance
     // monitoring, timeouts, etc.
-    file_put_contents($this->taskStatusStoragePath, time());
+    file_put_contents($this->taskFilePath, time());
   }
 
   public function taskIsDone()
@@ -63,16 +63,17 @@ class LongServerTask
 
     // Make sure we can write to our directory.
     $testFilename = rand(1, 1000);
+    $testFilepath = $this->taskStatusStoragePath . $testFilename;
     try
     {
-      file_put_contents($this->taskStatusStoragePath . $testFilename, 'Testing');
+      file_put_contents($testFilepath, 'Testing');
     } catch (Exception $e)
     {
       return false;
     }
 
     // Ok, we're good. Delete the dummy lock file (if we can write, there's no reason to suspect we can't unlink also).
-    unlink($testFilename);
+    unlink($testFilepath);
 
     // Announce sanity checks passed.
     return true;

@@ -8,23 +8,45 @@
 
 <button id="start-task-button">Start task</button>
 <button id="check-task-button">Check task</button>
+<button id="start-polling-button">Start polling</button>
+
+<div id="polling-status">Not polling</div>
 
 <script>
   (() => {
 
     const apiBaseUrl = 'http://localhost.test/long-server-task/example/'
     const exampleTaskName = 'Just some task that takes a long time'
+    const outputElement = document.getElementById('polling-status')
+
+    const poll = () => {
+      window.fetch(apiBaseUrl + 'pollEndpointExample.php?taskName=' + exampleTaskName)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          if (data.done === true) {
+            outputElement.innerText = 'Task is done!'
+          } else {
+            outputElement.innerText = 'Task is not done yet.'
+            setTimeout(poll, 1000)
+          }
+        })
+    }
+
+
     document.getElementById('start-task-button').addEventListener('click', () => {
       // Start the slow function.
       window.fetch(apiBaseUrl + 'task.php?taskName=' + exampleTaskName)
     })
 
     document.getElementById('check-task-button').addEventListener('click', () => {
-      // Poll for status on the slow function.
+      // Check for status on the slow function.
       window.fetch(apiBaseUrl + 'pollEndpointExample.php?taskName=' + exampleTaskName)
         .then(response => response.json())
         .then(data => window.alert(JSON.stringify(data)))
     })
+
+    document.getElementById('start-polling-button').addEventListener('click', poll)
   })()
 </script>
 </body>

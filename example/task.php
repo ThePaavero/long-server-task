@@ -4,7 +4,7 @@ require __DIR__ . '/../lib/LongServerTask.php';
 
 function slowFunction()
 {
-  sleep(rand(5, 30));
+  sleep(rand(5, 10));
   return true;
 }
 

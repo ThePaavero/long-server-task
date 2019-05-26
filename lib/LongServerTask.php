@@ -6,12 +6,18 @@ class LongServerTask
   private $taskFilePath;
   private $taskStatusStoragePath;
 
+  /**
+   * LongServerTask constructor.
+   *
+   * @param bool $doSanityChecks
+   *   If you're sure you have directories and permissions etc. set up, set this to false. It'll be faster that way.
+   */
   public function __construct($doSanityChecks = false)
   {
     $this->taskStatusStoragePath = __DIR__ . '/LongServerTask_tasks/';
 
     // Sanity checks?
-    if ($doSanityChecks && ! $this->doSanityChecks())
+    if ($doSanityChecks && ! $this->sanityChecksPass())
     {
       return false;
     }
@@ -19,6 +25,12 @@ class LongServerTask
     return true;
   }
 
+  /**
+   * Set our "Task name." This will determine our "lock file's" filename.
+   *
+   * @param string $taskName
+   *   i.e. 'Calculate a shit ton of stuff'
+   */
   public function setTaskName($taskName)
   {
     $this->taskName = $taskName;
@@ -27,6 +39,9 @@ class LongServerTask
     $this->taskFilePath = $this->taskStatusStoragePath . $this->stringToSlug($this->taskName);
   }
 
+  /**
+   * Call this before you start your heavy lifting.
+   */
   public function setTaskStarted()
   {
     // Create our file for this task.
@@ -35,24 +50,47 @@ class LongServerTask
     file_put_contents($this->taskFilePath, time());
   }
 
+  /**
+   * Call to check if task is done or not.
+   *
+   * @return bool
+   *   Is the task done?
+   */
   public function taskIsDone()
   {
     // If file exists, the related task still busy.
     return ! file_exists($this->taskFilePath);
   }
 
+  /**
+   * Call this when you're done with your heavy lifting.
+   */
   public function setTaskDone()
   {
     // Simply unlink our task file.
     unlink($this->taskFilePath);
   }
 
+  /**
+   * "Slugify" a string. Stolen from StackOverflow, I think.
+   *
+   * @param $string
+   *   String to "slugify".
+   * @return string
+   *   "Slugified" version of the original string.
+   */
   private function stringToSlug($string)
   {
     return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
   }
 
-  private function doSanityChecks()
+  /**
+   * Do some basic checks that ensure that we're able to do our thing.
+   *
+   * @return bool
+   *   Can this script work?
+   */
+  private function sanityChecksPass()
   {
     // Make sure our storage path exists.
     if ( ! is_dir($this->taskStatusStoragePath))

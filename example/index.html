@@ -13,11 +13,13 @@
   (() => {
 
     document.getElementById('start-task-button').addEventListener('click', () => {
-      window.fetch('http://localhost.test/long-server-task/example/startEndpoint.php?taskName=demo-task')
+      // Start the slow function.
+      window.fetch('http://localhost.test/long-server-task/example/task.php')
     })
 
     document.getElementById('check-task-button').addEventListener('click', () => {
-      window.fetch('http://localhost.test/long-server-task/example/pollEndpoint.php?taskName=demo-task')
+      // Poll for status on the slow function.
+      window.fetch('http://localhost.test/long-server-task/example/pollEndpoint.php?taskName=SomeSlowFunction')
         .then(response => {
           return response.json()
         })

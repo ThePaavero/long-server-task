@@ -38,7 +38,7 @@ class LongServerTask
   public function taskIsDone()
   {
     // If file exists, the related task still busy.
-    return file_exists($this->taskFilePath);
+    return ! file_exists($this->taskFilePath);
   }
 
   public function setTaskDone()

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../lib/LongServerTask.php';
+require __DIR__ . '/../lib/LongServerTask.php';
 
 function slowFunction()
 {
@@ -9,7 +9,7 @@ function slowFunction()
 }
 
 $persistentTask = new LongServerTask();
-$persistentTask->setTaskName('Some slow function');
+$persistentTask->setTaskName('SomeSlowFunction');
 $persistentTask->setTaskStarted();
 slowFunction();
 $persistentTask->setTaskDone();

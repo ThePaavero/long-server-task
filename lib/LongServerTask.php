@@ -6,7 +6,7 @@ class LongServerTask
   private $taskFilePath;
   private $taskStatusStoragePath;
 
-  public function __construct($doSanityChecks = true)
+  public function __construct($doSanityChecks = false)
   {
     $this->taskStatusStoragePath = __DIR__ . '/LongServerTask_tasks/';
 

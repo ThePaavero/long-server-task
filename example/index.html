@@ -7,16 +7,18 @@
 <body>
 
 <button id="start-task-button">Start task</button>
-<div id="polling-status">Idle.</div>
+<div id="polling-status"></div>
 
 <script>
   (() => {
 
     const apiBaseUrl = 'http://localhost.test/long-server-task/example/'
-    const exampleTaskName = 'Just some task that takes a long time'
+    const exampleTaskName = 'Just some task that takes a long time. The name does not matter much because it will be made into a filename safe string on the server.'
     const outputElement = document.getElementById('polling-status')
+    outputElement.innerText = 'Idle.'
 
     const poll = () => {
+      outputElement.innerText = '...'
       window.fetch(apiBaseUrl + 'pollEndpointExample.php?taskName=' + exampleTaskName)
         .then(response => response.json())
         .then(data => {

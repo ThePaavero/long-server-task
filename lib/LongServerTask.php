@@ -11,6 +11,8 @@ class LongServerTask
    *
    * @param bool $doSanityChecks
    *   If you're sure you have directories and permissions etc. set up, set this to false. It'll be faster that way.
+   *
+   * @throws Exception
    */
   public function __construct($doSanityChecks = false)
   {
@@ -19,7 +21,7 @@ class LongServerTask
     // Sanity checks?
     if ($doSanityChecks && ! $this->sanityChecksPass())
     {
-      return false;
+      throw new \Exception('LongServerTask cannot be used because of missing directories or faulty permissions');
     }
 
     return true;

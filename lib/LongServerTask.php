@@ -21,10 +21,8 @@ class LongServerTask
     // Sanity checks?
     if ($doSanityChecks && ! $this->sanityChecksPass())
     {
-      throw new \Exception('LongServerTask cannot be used because of missing directories or faulty permissions');
+      die('LongServerTask cannot be used because of missing directories or faulty permissions.');
     }
-
-    return true;
   }
 
   /**

@@ -74,7 +74,7 @@ class LongServerTask
   /**
    * "Slugify" a string. Stolen from StackOverflow, I think.
    *
-   * @param $string
+   * @param string $string
    *   String to "slugify".
    * @return string
    *   "Slugified" version of the original string.

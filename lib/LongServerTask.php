@@ -11,8 +11,6 @@ class LongServerTask
    *
    * @param bool $doSanityChecks
    *   If you're sure you have directories and permissions etc. set up, set this to false. It'll be faster that way.
-   *
-   * @throws Exception
    */
   public function __construct($doSanityChecks = false)
   {

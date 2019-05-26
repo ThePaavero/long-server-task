@@ -9,7 +9,7 @@ function slowFunction()
 }
 
 $persistentTask = new LongServerTask();
-$persistentTask->setTaskName('SomeSlowFunction');
+$persistentTask->setTaskName($_GET['taskName']);
 $persistentTask->setTaskStarted();
 slowFunction();
 $persistentTask->setTaskDone();

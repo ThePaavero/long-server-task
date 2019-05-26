@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -12,20 +12,18 @@
 <script>
   (() => {
 
+    const apiBaseUrl = 'http://localhost.test/long-server-task/example/'
+
     document.getElementById('start-task-button').addEventListener('click', () => {
       // Start the slow function.
-      window.fetch('http://localhost.test/long-server-task/example/task.php')
+      window.fetch(apiBaseUrl + 'task.php?taskName=someslowfunction')
     })
 
     document.getElementById('check-task-button').addEventListener('click', () => {
       // Poll for status on the slow function.
-      window.fetch('http://localhost.test/long-server-task/example/pollEndpoint.php?taskName=SomeSlowFunction')
-        .then(response => {
-          return response.json()
-        })
-        .then(data => {
-          window.alert(JSON.stringify(data))
-        })
+      window.fetch(apiBaseUrl + 'pollEndpoint.php?taskName=someslowfunction')
+        .then(response => response.json())
+        .then(data => window.alert(JSON.stringify(data)))
     })
   })()
 </script>
